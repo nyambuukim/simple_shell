@@ -53,7 +53,7 @@ typedef struct liststr
 /**
  *struct passinfo - Pseudo-arguments to pass into a function.
  *@arg: String generated from getline containing arguments
- *@argv: Argument variable.
+ *@argv: Argument vector.
  *@path: Path to current command.
  *@argc: Argument count.
  *@line_count: Error counter.

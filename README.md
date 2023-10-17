@@ -1,1 +1,1 @@
-Collaborators: Tinnie & Jay
+Tinnie & Jay

@@ -7,7 +7,7 @@ void free_env(void);
 /**
 * _copyenv - Environment.
 * Return: NULL/Pointer.
-*         
+*
 **/
 
 char **_copyenv(void)
@@ -17,7 +17,8 @@ char **_copyenv(void)
 	size_t sz;
 	int ind;
 
-	for (sz = 0; environ[sz]; sz++);
+	for (sz = 0; environ[sz]; sz++)
+		;
 
 	new_environ = malloc(sizeof(char *) * (sz + 1));
 	if (!new_environ)

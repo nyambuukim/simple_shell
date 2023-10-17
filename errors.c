@@ -16,7 +16,7 @@ int num_len(int num)
 	unsigned int num1;
 	int len = 1;
 
-	if (num < 0)
+		if (num < 0)
 		{
 			len++;
 			num1 = num * -1;

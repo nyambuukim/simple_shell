@@ -5,7 +5,7 @@ int token_len(char *str, char *delim);
 char **_strtok(char *line, char *delim);
 
 /**
-* token_len - delimiter index. 
+* token_len - delimiter index.
 * @str: The string.
 * @delim: The delimiter.
 * Return:0

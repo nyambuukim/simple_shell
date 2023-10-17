@@ -1,144 +1,139 @@
 #include "shell.h"
 
-void free_args(char **args, char **front);
 char *get_pid(void);
-char *get_env_value(char *beginning, int len);
+void free_args(char **args, char **front);
 void variable_replacement(char **args, int *exe_ret);
+char *get_env_value(char *beginning, int len);
 
 /**
- * free_args - Frees up memory taken by args.
- * @args: A null-terminated double pointer containing commands/arguments.
- * @front: A double pointer to the beginning of args.
+ * free_args - Frees arg memory
+ * @args: A ncommands/arguments.
+ * @front: Ang of args.
  */
+
 void free_args(char **args, char **front)
 {
-        size_t i;
+        size_t in;
 
-        for (i = 0; args[i] || args[i + 1]; i++)
-                free(args[i]);
+        for (in = 0; args[in] || args[in + 1]; in++)
+                free(args[in]);
 
         free(front);
 }
 
 /**
- * get_pid - Gets the current process ID.
- * Description: Opens the stat file, a space-delimited file containing
- *              information about the current process. The PID is the
- *              first word in the file. The function reads the PID into
- *              a buffer and replace the space at the end with a \0 byte.
- *
- * Return: The current process ID or NULL on failure.
+ * get_pid - Gets process ID.
+ * Description: Opens the stat file*
+ * Return: PID/ NULL (failure).
  */
+
 char *get_pid(void)
 {
-        size_t i = 0;
-        char *buffer;
-        ssize_t file;
+        size_t in = 0;
+        char *buffers;
+        ssize_t files;
 
-        file = open("/proc/self/stat", O_RDONLY);
-        if (file == -1)
+        files = open("/proc/self/stat", O_RDONLY);
+        if (files == -1)
         {
                 perror("Cant read file");
                 return (NULL);
         }
-        buffer = malloc(120);
-        if (!buffer)
+        buffers = malloc(120);
+        if (!buffers)
         {
-                close(file);
+                close(files);
                 return (NULL);
         }
-        read(file, buffer, 120);
-        while (buffer[i] != ' ')
-                i++;
-        buffer[i] = '\0';
+        read(files, buffers, 120);
+        while (buffers[in] != ' ')
+                in++;
+        buffers[in] = '\0';
 
-        close(file);
-        return (buffer);
+        close(files);
+        return (buffers);
 }
 
 /**
- * get_env_value - Gets the value corresponding to an environmental variable.
- * @beginning: The environmental variable to search for.
- * @len: The length of the environmental variable to search for.
- *
- * Return: If the variable is not found - an empty string.
- *         Otherwise - the value of the environmental variable.
- *
- * Description: Variables are stored in the format VARIABLE=VALUE.
+ * get_env_value - Get value env variable.
+ * @beginning: env var.
+ * @len: The length 
+ * Return: 0 *
  */
+
 char *get_env_value(char *beginning, int len)
+
 {
-        char **var_addr;
-        char *replacement = NULL, *temp, *var;
+        char **var_addres;
+        char *replacement = NULL, *tmp, *vari;
 
-        var = malloc(len + 1);
-        if (!var)
+        vari = malloc(len + 1);
+        if (!vari)
                 return (NULL);
-        var[0] = '\0';
-        _strncat(var, beginning, len);
+        vari[0] = '\0';
+        _strncat(vari, beginning, len);
 
-        var_addr = _getenv(var);
-        free(var);
-        if (var_addr)
+        var_addres = _getenv(vari);
+        free(vari);
+        if (var_addres)
         {
-                temp = *var_addr;
-                while (*temp != '=')
-                        temp++;
-                temp++;
-                replacement = malloc(_strlen(temp) + 1);
+                tmp = *var_addres;
+                while (*tmp != '=')
+                        tmp++;
+                tmp++;
+                replacement = malloc(_strlen(tmp) + 1);
                 if (replacement)
-                        _strcpy(replacement, temp);
+                        _strcpy(replacement, tmp);
         }
 
         return (replacement);
 }
 
 /**
- * variable_replacement - Handles variable replacement.
- * @line: A double pointer containing the command and arguments.
- * @exe_ret: A pointer to the return value of the last executed command.
+ * variable_replacement - Handl var rep.
+ * @line: Command and arguments.
+ * @exe_ret:the last exec cmd.
  *
- * Description: Replaces $$ with the current PID, $? with the return value
- *              of the last executed program, and envrionmental variables
- *              preceded by $ with their corresponding value.
+ * 
  */
+
 void variable_replacement(char **line, int *exe_ret)
+
 {
-        int j, k = 0, len;
+        int a, k = 0, len;
         char *replacement = NULL, *old_line = NULL, *new_line;
 
         old_line = *line;
-        for (j = 0; old_line[j]; j++)
+        for (a = 0; old_line[a]; a++)
         {
-                if (old_line[j] == '$' && old_line[j + 1] &&
-		    old_line[j + 1] != ' ')
+                if (old_line[a] == '$' && old_line[a + 1] &&
+		    old_line[a + 1] != ' ')
                 {
-                        if (old_line[j + 1] == '$')
+                        if (old_line[a + 1] == '$')
                         {
                                 replacement = get_pid();
-                                k = j + 2;
+                                k = a + 2;
                         }
-                        else if (old_line[j + 1] == '?')
+                        else if (old_line[a + 1] == '?')
                         {
                                 replacement = _itoa(*exe_ret);
-                                k = j + 2;
+                                k = a + 2;
                         }
-                        else if (old_line[j + 1])
+                        else if (old_line[a + 1])
                         {
-                                /* extract the variable name to search for */
-                                for (k = j + 1; old_line[k] &&
+                                for (k = a + 1; old_line[k] &&
                                                 old_line[k] != '$' &&
 					     old_line[k] != ' '; k++)
                                         ;
-                                len = k - (j + 1);
-                                replacement = get_env_value(&old_line[j + 1], len);
+                                len = k - (a + 1);
+                                replacement = get_env_value(&old_line[a + 1], len);
                         }
-                        new_line = malloc(j + _strlen(replacement)
+                        new_line = malloc(a + _strlen(replacement)
                                           + _strlen(&old_line[k]) + 1);
                         if (!line)
                                 return;
                         new_line[0] = '\0';
-                        _strncat(new_line, old_line, j);
+                        _strncat(new_line, old_line, a);
                         if (replacement)
                         {
                                 _strcat(new_line, replacement);
@@ -149,7 +144,7 @@ void variable_replacement(char **line, int *exe_ret)
                         free(old_line);
                         *line = new_line;
                         old_line = new_line;
-                        j = -1;
+                        a = -1;
                 }
         }
 }

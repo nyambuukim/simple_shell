@@ -1,45 +1,50 @@
 #include "shell.h"
-void help_env(void);
-void help_setenv(void);
-void help_unsetenv(void);
+
 void help_history(void);
+void help_setenv(void);
+void help_env(void);
+void help_unsetenv(void);
+
 
 /**
-* help_env - Displays information on the shellby builtin command 'env'.
+* help_env - Shellby builtin 'env'.
 */
+
 void help_env(void)
+
 {
-char *msg = "env: env\n\tPrints the current environment.\n";
+	char *msg = "env: env\n\tPrint environment current.\n";
 
 write(STDOUT_FILENO, msg, _strlen(msg));
 }
 
 /**
-* help_setenv - Displays information on the shellby builtin command 'setenv'.
+* help_setenv - Shellby builtin 'setenv'.
 */
+
 void help_setenv(void)
 {
-char *msg = "setenv: setenv [VARIABLE] [VALUE]\n\tInitializes a new";
+char *msg = "setenv: setenv [VARIABLE] [VALUE]\n\tInit new Env";
 
 write(STDOUT_FILENO, msg, _strlen(msg));
-msg = "environment variable, or modifies an existing one.\n\n";
+msg = "env var, or modify existing env.\n\n";
 write(STDOUT_FILENO, msg, _strlen(msg));
-msg = "\tUpon failure, prints a message to stderr.\n";
+msg = "\tFailure, print to STDERR.\n";
 write(STDOUT_FILENO, msg, _strlen(msg));
 }
 
 /**
-* help_unsetenv - Displays information on the shellby builtin command
-* 'unsetenv'.
+* help_unsetenv - Shellby builtin 'unsetenv'.
 */
 void help_unsetenv(void)
+
 {
-char *msg = "unsetenv: unsetenv [VARIABLE]\n\tRemoves an ";
+	char *msg = "unsetenv: unsetenv [VARIABLE]\n\tRemove ";
 
 write(STDOUT_FILENO, msg, _strlen(msg));
-msg = "environmental variable.\n\n\tUpon failure, prints a ";
+msg = "environmental variable.\n\n\tFailure, print a ";
 write(STDOUT_FILENO, msg, _strlen(msg));
-msg = "message to stderr.\n";
+msg = "Message STDERR.\n";
 write(STDOUT_FILENO, msg, _strlen(msg));
 }
 

@@ -1,28 +1,30 @@
 #include "shell.h"
 
-char *error_env(char **args);
 char *error_1(char **args);
-char *error_2_exit(char **args);
+char *error_env(char **args);
 char *error_2_cd(char **args);
 char *error_2_syntax(char **args);
+char *error_2_exit(char **args);
+
 /**
- * error_env - Creates an error message for shellby_env errors.
- * @args: An array of arguments passed to the command.
- *
- * Return: The error string.
+ * error_env - Shellby_env errors.
+ * @args: Arguments.
+ * Return: Error string.
  */
+
 char *error_env(char **args)
+
 {
         char *error, *hist_str;
-        int len;
+        int length;
 
         hist_str = _itoa(hist);
         if (!hist_str)
                 return (NULL);
 
         args--;
-        len = _strlen(name) + _strlen(hist_str) + _strlen(args[0]) + 45;
-        error = malloc(sizeof(char) * (len + 1));
+        length = _strlen(name) + _strlen(hist_str) + _strlen(args[0]) + 45;
+        error = malloc(sizeof(char) * (length + 1));
         if (!error)
         {
                 free(hist_str);
@@ -41,18 +43,19 @@ char *error_env(char **args)
 }
 
 /**
- * error_1 - Creates an error message for shellby_alias errors.
- * @args: An array of arguments passed to the command.
- *
- * Return: The error string.
+ * error_1 - Shellby_alias errors.
+ * @args: Arguments passed to the command.
+ * Return: Error string.
  */
+
 char *error_1(char **args)
+
 {
         char *error;
-        int len;
+        int length;
 
-        len = _strlen(name) + _strlen(args[0]) + 13;
-        error = malloc(sizeof(char) * (len + 1));
+        length = _strlen(name) + _strlen(args[0]) + 13;
+        error = malloc(sizeof(char) * (length + 1));
         if (!error)
                 return (NULL);
 
@@ -64,22 +67,23 @@ char *error_1(char **args)
 }
 
 /**
- * error_2_exit - Creates an error message for shellby_exit errors.
- * @args: An array of arguments passed to the command.
- *
- * Return: The error string.
+ * error_2_exit - Shellby_exit errors.
+ * @args: Arguments.
+ * Return: Error string.
  */
+
 char *error_2_exit(char **args)
+
 {
         char *error, *hist_str;
-        int len;
+        int length;
 
         hist_str = _itoa(hist);
         if (!hist_str)
                 return (NULL);
 
-        len = _strlen(name) + _strlen(hist_str) + _strlen(args[0]) + 27;
-        error = malloc(sizeof(char) * (len + 1));
+        length = _strlen(name) + _strlen(hist_str) + _strlen(args[0]) + 27;
+        error = malloc(sizeof(char) * (length + 1));
         if (!error)
         {
                 free(hist_str);
@@ -98,15 +102,16 @@ char *error_2_exit(char **args)
 }
 
 /**
- * error_2_cd - Creates an error message for shellby_cd errors.
- * @args: An array of arguments passed to the command.
- *
- * Return: The error string.
+ * error_2_cd - Shellby_cd errors.
+ * @args: Arguments.
+ * Return: Error string.
  */
+
 char *error_2_cd(char **args)
+
 {
         char *error, *hist_str;
-        int len;
+        int length;
 
         hist_str = _itoa(hist);
         if (!hist_str)
@@ -114,8 +119,8 @@ char *error_2_cd(char **args)
 
         if (args[0][0] == '-')
                 args[0][2] = '\0';
-        len = _strlen(name) + _strlen(hist_str) + _strlen(args[0]) + 24;
-        error = malloc(sizeof(char) * (len + 1));
+        length = _strlen(name) + _strlen(hist_str) + _strlen(args[0]) + 24;
+        error = malloc(sizeof(char) * (length + 1));
         if (!error)
         {
                 free(hist_str);
@@ -126,9 +131,9 @@ char *error_2_cd(char **args)
         _strcat(error, ": ");
         _strcat(error, hist_str);
         if (args[0][0] == '-')
-                _strcat(error, ": cd: Illegal option ");
+                _strcat(error, ": cd: ilegal option ");
         else
-                _strcat(error, ": cd: can't cd to ");
+                _strcat(error, ": cd: canno't cd to ");
         _strcat(error, args[0]);
         _strcat(error, "\n");
 
@@ -137,22 +142,23 @@ char *error_2_cd(char **args)
 }
 
 /**
- * error_2_syntax - Creates an error message for syntax errors.
- * @args: An array of arguments passed to the command.
- *
- * Return: The error string.
+ * error_2_syntax - Syntax errors.
+ * @args: Arguments.
+ * Return: Error string.
  */
+
 char *error_2_syntax(char **args)
+
 {
         char *error, *hist_str;
-        int len;
+        int length;
 
         hist_str = _itoa(hist);
         if (!hist_str)
                 return (NULL);
 
-        len = _strlen(name) + _strlen(hist_str) + _strlen(args[0]) + 33;
-        error = malloc(sizeof(char) * (len + 1));
+        length = _strlen(name) + _strlen(hist_str) + _strlen(args[0]) + 33;
+        error = malloc(sizeof(char) * (length + 1));
         if (!error)
         {
                 free(hist_str);
@@ -164,7 +170,7 @@ char *error_2_syntax(char **args)
         _strcat(error, hist_str);
         _strcat(error, ": Syntax error: \"");
         _strcat(error, args[0]);
-        _strcat(error, "\" unexpected\n");
+        _strcat(error, "\" unexpected End\n");
 
         free(hist_str);
         return (error);

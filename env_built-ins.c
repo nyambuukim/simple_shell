@@ -1,32 +1,30 @@
 #include "shell.h"
 
 int shellby_env(char **args, char __attribute__((__unused__)) **front);
-int shellby_setenv(char **args, char __attribute__((__unused__)) **front);
 int shellby_unsetenv(char **args, char __attribute__((__unused__)) **front);
+int shellby_setenv(char **args, char __attribute__((__unused__)) **front);
 
 /**
- * shellby_env - Prints the current environment.
- * @args: An array of arguments passed to the shell.
- * @front: A double pointer to the beginning of args.
- *
- * Return: If an error occurs - -1.
- *         Otherwise - 0.
- *
- * Description: Prints one variable per line in the
- *              format 'variable'='value'.
+ * shellby_env - Current environment.
+ * @args: Arguments.
+ * @front: Beginning of args.
+ * Return: Error -1.
+ *         Success 0.
  */
+
 int shellby_env(char **args, char __attribute__((__unused__)) **front)
+
 {
-        int index;
-        char nc = '\n';
+        int inx;
+        char onc = '\n';
 
         if (!environ)
                 return (-1);
 
-        for (index = 0; environ[index]; index++)
+        for (inx = 0; environ[inx]; inx++)
         {
-                write(STDOUT_FILENO, environ[index], _strlen(environ[index]));
-                write(STDOUT_FILENO, &nc, 1);
+                write(STDOUT_FILENO, environ[inx], _strlen(environ[inx]));
+                write(STDOUT_FILENO, &onc, 1);
         }
 
         (void)args;
@@ -34,20 +32,17 @@ int shellby_env(char **args, char __attribute__((__unused__)) **front)
 }
 
 /**
- * shellby_setenv - Changes or adds an environmental variable to the PATH.
- * @args: An array of arguments passed to the shell.
- * @front: A double pointer to the beginning of args.
- * Description: args[1] is the name of the new or existing PATH variable.
- *              args[2] is the value to set the new or changed variable to.
- *
- * Return: If an error occurs - -1.
- *         Otherwise - 0.
+ * shellby_setenv - Add env to PATH.
+ * @args: Arguments.
+ * @front: Beginning of args.
+ * Return: error -1.
+ *         Success- 0.
  */
 int shellby_setenv(char **args, char __attribute__((__unused__)) **front)
 {
         char **env_var = NULL, **new_environ, *new_value;
-        size_t size;
-        int index;
+        size_t siz;
+        int inde;
 
         if (!args[0] || !args[1])
                 return (create_error(args, -1));
@@ -66,41 +61,40 @@ int shellby_setenv(char **args, char __attribute__((__unused__)) **front)
                 *env_var = new_value;
                 return (0);
         }
-        for (size = 0; environ[size]; size++)
-                ;
+        for (siz = 0; environ[siz]; siz++);
 
-        new_environ = malloc(sizeof(char *) * (size + 2));
+        new_environ = malloc(sizeof(char *) * (siz + 2));
         if (!new_environ)
         {
                 free(new_value);
                 return (create_error(args, -1));
         }
 
-        for (index = 0; environ[index]; index++)
-                new_environ[index] = environ[index];
+        for (inde = 0; environ[inde]; inde++)
+                new_environ[inde] = environ[inde];
 
         free(environ);
         environ = new_environ;
-        environ[index] = new_value;
-        environ[index + 1] = NULL;
+        environ[inde] = new_value;
+        environ[inde + 1] = NULL;
 
         return (0);
 }
 
 /**
- * shellby_unsetenv - Deletes an environmental variable from the PATH.
- * @args: An array of arguments passed to the shell.
- * @front: A double pointer to the beginning of args.
- * Description: args[1] is the PATH variable to remove.
- *
- * Return: If an error occurs - -1.
- *         Otherwise - 0.
+ * shellby_unsetenv - Delete PATH.
+ * @args: Arguments.
+ * @front: Beginning of args.
+ * Return: Error -1.
+ *         Success - 0.
  */
+
 int shellby_unsetenv(char **args, char __attribute__((__unused__)) **front)
+
 {
         char **env_var, **new_environ;
         size_t size;
-        int index, index2;
+        int indx, ind2;
 
         if (!args[0])
                 return (create_error(args, -1));
@@ -115,15 +109,15 @@ int shellby_unsetenv(char **args, char __attribute__((__unused__)) **front)
         if (!new_environ)
                 return (create_error(args, -1));
 
-        for (index = 0, index2 = 0; environ[index]; index++)
+        for (indx = 0, ind2 = 0; environ[indx]; indx++)
         {
-                if (*env_var == environ[index])
+                if (*env_var == environ[indx])
                 {
                         free(*env_var);
                         continue;
                 }
-                new_environ[index2] = environ[index];
-                index2++;
+                new_environ[ind2] = environ[indx];
+                ind2++;
         }
         free(environ);
         environ = new_environ;

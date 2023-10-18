@@ -1,16 +1,16 @@
 #include "shell.h"
+
 int shellby_exit(char **args, char **front);
-int shellby_cd(char **args, char __attribute__((__unused__)) **front);
-int (*get_builtin(char *command))(char **args, char **front);
 int shellby_help(char **args, char __attribute__((__unused__)) **front);
+int (*get_builtin(char *command))(char **args, char **front);
+int shellby_cd(char **args, char __attribute__((__unused__)) **front);
 
 /**
- * get_builtin - Matches a command with a corresponding
- *               shellby builtin function.
- * @command: The command to match.
- *
- * Return: A function pointer to the corresponding builtin.
+ * get_builtin - Matches command.
+ * @command: Command match.
+ * Return: pointer.
  */
+ 
 int (*get_builtin(char *command))(char **args, char **front)
 {
         builtin_t funcs[] = {
@@ -23,29 +23,26 @@ int (*get_builtin(char *command))(char **args, char **front)
                 { "help", shellby_help },
                 { NULL, NULL }
         };
-        int i;
+        int ind;
 
-        for (i = 0; funcs[i].name; i++)
+        for (ind = 0; funcs[ind].name; ind++)
         {
-                if (_strcmp(funcs[i].name, command) == 0)
+                if (_strcmp(funcs[ind].name, command) == 0)
                         break;
         }
-        return (funcs[i].f);
+        return (funcs[ind].f);
 }
 
 /**
- * shellby_exit - Causes normal process termination
- *                for the shellby shell.
- * @args: An array of arguments containing the exit value.
- * @front: A double pointer to the beginning of args.
- *
- * Return: If there are no arguments - -3.
- *         If the given exit value is invalid - 2.
- *         O/w - exits with the given status value.
- *
- * Description: Upon returning -3, the program exits back in the main function.
+ * shellby_exit - Normal process termination.
+ * @args: Arguments.
+ * @front: Pointer.
+ * Return: No args -3.
+ *         Invalid - 2.*
  */
+
 int shellby_exit(char **args, char **front)
+
 {
         int i, len_of_int = 10;
         unsigned int num = 0, max = 1 << (sizeof(int) * 8 - 1);
@@ -79,15 +76,14 @@ int shellby_exit(char **args, char **front)
 }
 
 /**
- * shellby_cd - Changes the current directory of the shellby process.
- * @args: An array of arguments.
- * @front: A double pointer to the beginning of args.
- *
- * Return: If the given string is not a directory - 2.
- *         If an error occurs - -1.
- *         Otherwise - 0.
+ * shellby_cd - Cd shellby process.
+ * @args: Arguments.
+ * @front: A begin args.
+ * Return: 0
  */
+
 int shellby_cd(char **args, char __attribute__((__unused__)) **front)
+
 {
         char **dir_info, *new_line = "\n";
         char *oldpwd = NULL, *pwd = NULL;
@@ -160,14 +156,14 @@ int shellby_cd(char **args, char __attribute__((__unused__)) **front)
 }
 
 /**
- * shellby_help - Displays information about shellby builtin commands.
- * @args: An array of arguments.
- * @front: A pointer to the beginning of args.
- *
- * Return: If an error occurs - -1.
- *         Otherwise - 0.
+ * shellby_help - Shellby builtin commands.
+ * @args: Arguments.
+ * @front: Begin of args.
+ * Return: -1/0.
  */
+
 int shellby_help(char **args, char __attribute__((__unused__)) **front)
+
 {
         if (!args[0])
                 help_all();

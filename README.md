@@ -24,3 +24,6 @@ Learning Objectives
 Write a UNIX command line interpreter.
 
 Usage: simple_shell
+
+
+Month #3 of ALx

@@ -1,10 +1,10 @@
 #include "shell.h"
 
-int call_args(char **args, char **front, int *exe_ret);
 char *get_args(char *line, int *exe_ret);
-int run_args(char **args, char **front, int *exe_ret);
 int check_args(char **args);
+int run_args(char **args, char **front, int *exe_ret);
 int handle_args(int *exe_ret);
+int call_args(char **args, char **front, int *exe_ret);
 
 /**
  * get_args - command from stdio.
@@ -13,6 +13,7 @@ int handle_args(int *exe_ret);
  * Return: NULL/Pointer.
  * TJ.
  */
+
 char *get_args(char *line, int *exe_ret)
 
 {

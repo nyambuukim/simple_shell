@@ -38,7 +38,7 @@ char *error_126(char **args)
 
 /**
 * error_127 - No command.
-* @args: A  
+* @args: A
 * * Return: error string.
 */
 

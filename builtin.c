@@ -105,7 +105,7 @@ int shellby_cd(char **args, char __attribute__((__unused__)) **front)
 			}
 			else
 			{
-				ree(oldpwd);
+				free(oldpwd);
 				return (create_error(args, 2));
 			}
 		}

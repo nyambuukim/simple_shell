@@ -1,79 +1,74 @@
 #include "shell.h"
-
 char **_copyenv(void);
-char **_getenv(const char *var);
 void free_env(void);
+char **_getenv(const char *var);
 
 /**
-* _copyenv - Environment.
-* Return: NULL/Pointer.
+* _copyenv - Creates a copy of the environment.
 *
-**/
-
+* Return: If an error occurs - NULL.
+*         O/w - a double pointer to the new copy.
+*/
 char **_copyenv(void)
-
 {
-	char **new_environ;
-	size_t sz;
-	int ind;
+char **new_environ;
+size_t size;
+int index;
 
-	for (sz = 0; environ[sz]; sz++)
-		;
+for (size = 0; environ[size]; size++)
+;
 
-	new_environ = malloc(sizeof(char *) * (sz + 1));
-	if (!new_environ)
-		return (NULL);
+new_environ = malloc(sizeof(char *) * (size + 1));
+if (!new_environ)
+return (NULL);
 
-	for (ind = 0; environ[ind]; ind++)
-	{
-		new_environ[ind] = malloc(_strlen(environ[ind]) + 1);
+for (index = 0; environ[index]; index++)
+{
+new_environ[index] = malloc(_strlen(environ[index]) + 1);
 
-	if (!new_environ[ind])
-		{
-		for (ind--; ind >= 0; ind--)
-		free(new_environ[ind]);
-		free(new_environ);
-		return (NULL);
-		}
-		_strcpy(new_environ[ind], environ[ind]);
-	}
-	new_environ[ind] = NULL;
+if (!new_environ[index])
+{
+for (index--; index >= 0; index--)
+free(new_environ[index]);
+free(new_environ);
+return (NULL);
+}
+_strcpy(new_environ[index], environ[index]);
+}
+new_environ[index] = NULL;
 
-	return (new_environ);
+return (new_environ);
 }
 
 /**
-* free_env - Frees environment.
+* free_env - Frees the the environment copy.
 */
-
 void free_env(void)
-
 {
-	int indx;
+int index;
 
-		for (indx = 0; environ[indx]; indx++)
-		free(environ[indx]);
-		free(environ);
+for (index = 0; environ[index]; index++)
+free(environ[index]);
+free(environ);
 }
 
 /**
-* _getenv -  PATH.
-* @var: Environmental variable.
-* Return: NULL/ Pointer.
+* _getenv - Gets an environmental variable from the PATH.
+* @var: The name of the environmental variable to get.
 *
+* Return: If the environmental variable does not exist - NULL.
+*         Otherwise - a pointer to the environmental variable.
 */
-
 char **_getenv(const char *var)
-
 {
-	int i, length;
+int index, len;
 
-	length = _strlen(var);
-	for (i = 0; environ[i]; i++)
-	{
-	if (_strncmp(var, environ[i], length) == 0)
-	return (&environ[i]);
-	}
-	return (NULL);
+len = _strlen(var);
+for (index = 0; environ[index]; index++)
+{
+if (_strncmp(var, environ[index], len) == 0)
+return (&environ[index]);
+}
+return (NULL);
 }
 

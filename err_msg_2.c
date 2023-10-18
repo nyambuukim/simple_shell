@@ -30,15 +30,15 @@ char *error_126(char **args)
 	_strcat(error, hist_str);
 	_strcat(error, ": ");
 	_strcat(error, args[0]);
-	_strcat(error, ": Permission denied\n");
+	_strcat(error, ": Perm  denied\n");
 
 	free(hist_str);
 	return (error);
 }
 
 /**
-* error_127 - Command not found.
-* @args: A arguments 
+* error_127 - No command.
+* @args: A  
 * * Return: error string.
 */
 

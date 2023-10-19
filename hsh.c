@@ -4,9 +4,12 @@ void sig_handler(int sig);
 int execute(char **args, char **front);
 
 /**
- * sig_handler - Prints a new prompt upon a signal.
- * @sig: The signal.
+ * sig_handler - Get a signal an print prompt.
+ * @sig: The signal
+ * Return: 0(success).
+ * TJ
  */
+
 void sig_handler(int sig)
 {
 	char *new_prompt = "\n$ ";
@@ -17,14 +20,15 @@ void sig_handler(int sig)
 }
 
 /**
- * execute - Executes a command in a child process.
- * @args: An array of arguments.
- * @front: A double pointer to the beginning of args.
- *
- * Return: If an error occurs - a corresponding error code.
- *         O/w - The exit value of the last executed command.
+ * execute - Child process commands.
+ * @args: Argumentss.
+ * @front: Beginning args double pointer.
+ * Return: Error code/Exit value.
+ * TJ
  */
+
 int execute(char **args, char **front)
+
 {
 	pid_t child_pid;
 	int status, flag = 0, ret = 0;
@@ -75,15 +79,16 @@ int execute(char **args, char **front)
 }
 
 /**
- * main - Runs a simple UNIX command interpreter.
- * @argc: The number of arguments supplied to the program.
- * @argv: An array of pointers to the arguments.
- *
- * Return: The return value of the last executed command.
+ * main - UNIX command interpreter.
+ * @argc: Argument counter.
+ * @argv: Argument vector.
+ * Return: Last return value.
+ * TJ
  */
+
 int main(int argc, char *argv[])
 {
-	int ret = 0, retn;
+	int let = 0, retn;
 	int *exe_ret = &retn;
 	char *prompt = "$ ", *new_line = "\n";
 
@@ -98,15 +103,15 @@ int main(int argc, char *argv[])
 
 	if (argc != 1)
 	{
-		ret = proc_file_commands(argv[1], exe_ret);
+		let = proc_file_commands(argv[1], exe_ret);
 		free_env();
 		free_alias_list(aliases);
 		return (*exe_ret);
 	}
 	if (!isatty(STDIN_FILENO))
 	{
-		while (ret != END_OF_FILE && ret != EXIT)
-			ret = handle_args(exe_ret);
+		while (let != END_OF_FILE && let != EXIT)
+			let = handle_args(exe_ret);
 		free_env();
 		free_alias_list(aliases);
 		return (*exe_ret);
@@ -115,10 +120,10 @@ int main(int argc, char *argv[])
 	while (1)
 	{
 		write(STDOUT_FILENO, prompt, 2);
-		ret = handle_args(exe_ret);
-		if (ret == END_OF_FILE || ret == EXIT)
+		let = handle_args(exe_ret);
+		if (let == END_OF_FILE || let == EXIT)
 		{
-			if (ret == END_OF_FILE)
+			if (let == END_OF_FILE)
 				write(STDOUT_FILENO, new_line, 1);
 			free_env();
 			free_alias_list(aliases);

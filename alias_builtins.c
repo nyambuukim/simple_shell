@@ -36,7 +36,7 @@ int shellby_alias(char **args, char __attribute__((__unused__)) **front)
 			{
 			while (temp)
 			{
-			if (_strcmp(args[index], temp->name) == 0)
+				if (_strcmp(args[index], temp->name) == 0)
 				{
 					print_alias(temp);
 					break;

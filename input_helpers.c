@@ -135,12 +135,11 @@ int run_args(char **args, char **front, int *exe_ret)
 }
 
 /**
- * handle_args - Gets, calls, and runs the execution of a command.
- * @exe_ret: The return value of the parent process' last executed command.
- *
- * Return: If an end-of-file is read - END_OF_FILE (-2).
- *	   If the input cannot be tokenized - -1.
- *	   O/w - The exit value of the last executed command.
+ * handle_args - Get/call/Run.Exec.
+ * @exe_ret: Paren proceess value
+ * Return: END OF FILE (-2).
+ *	   Non tokenized -1.
+ *	   Exit value.
  */
 int handle_args(int *exe_ret)
 {
